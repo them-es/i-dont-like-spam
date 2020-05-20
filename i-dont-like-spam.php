@@ -44,7 +44,7 @@ class I_Dont_Like_Spam {
 	 * Test compatibility.
 	 */
 	public function pluginmissing_admin_notice() {
-		printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error notice-billy', sprintf( __( '<strong>I don\'t like Spam!</strong> is an Anti-Spam add-on for contact forms. Please install and activate the following %s.', 'i-dont-like-spam' ), sprintf( '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%1$s' ) ) . '">%2$s</a>', 'Ninja Forms', __( 'Plugin', 'i-dont-like-spam' ) ) ) );
+		printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error', sprintf( __( '<strong>I don\'t like Spam!</strong> is an Anti-Spam add-on for contact forms. Please install and activate the following %s.', 'i-dont-like-spam' ), sprintf( '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%1$s' ) ) . '">%2$s</a>', 'Ninja Forms', __( 'Plugin', 'i-dont-like-spam' ) ) ) );
 
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
