@@ -9,15 +9,15 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
 
-Use the [WordPress Comment Blacklist/Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Right now it is only compatible with Ninja Forms.
+Use the [WordPress Comment Blacklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Currently this plugin is only compatible with Ninja Forms.
 
 = Setup =
-* This plugin is an Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms).
-* Login to the dashboard and open **Settings > Discussion**
-* Scroll down to **Comment Blocklist**
-* Enter some bad words or weblinks that keep bugging you. **Choose your blacklist words wisely!**
-* Ninja Forms contact forms that contain any of these words cannot be submitted anymore and will show an error message.
-* Optional: You can modify the error message output in the Theme Customizer.
+* Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms).
+* Login to the dashboard and open **Settings > Discussion**.
+* Scroll down to **Comment Blocklist**.
+* Enter some bad words, phrases or weblinks that keep bugging you. **Choose your blacklist words wisely!**
+* Contact forms that contain any of these words cannot be submitted anymore and will show an error message.
+* Optional: Modify the error message output in the Theme Customizer.
 
 = Fun fact =
 Spam emails are usually very annoying and affect work - and there is nothing funny about it. But did you know that the term Spam, referring to junk mail, was named after a famous Monty Python sketch?
@@ -38,6 +38,7 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 
 1. Upload the Plugin to the `/wp-content/plugins/` directory.
 2. Activate it through the 'Plugins' menu in WordPress.
+3. Add a list of bad words, phrases or weblinks that should prevent form submissions to the [Comment Blacklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist).
 
 == Upgrade Notice ==
 

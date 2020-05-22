@@ -1,17 +1,21 @@
 ## I don't like Spam!
 
-**I don't like Spam! by them.es** is a lightweight WordPress Plugin for preventing spam using the [WordPress Comment Blacklist/Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature.
+**I don't like Spam! by them.es** is a lightweight WordPress Plugin for preventing contact form spam submissions using the [WordPress Comment Blacklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature. Currently this plugin is only compatible with Ninja Forms.
 
 ## Setup
-* This plugin is an Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms).
+* Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms).
 * Login to the dashboard and open **Settings > Discussion**
 * Scroll down to **Comment Blocklist**
-* Enter some bad words or weblinks that keep bugging you. **Choose your blacklist words wisely!**
-* Ninja Forms contact forms that contain any of these words cannot be submitted anymore and will show an error message.
-* Optional: You can modify the error message output in the Theme Customizer.
+* Enter all bad words, phrases or weblinks that keep bugging you. **Choose your blacklist words wisely!**
+* Contact forms that contain any of these words cannot be submitted anymore and will show an error message.
+* Optional: Modify the error message output in the Theme Customizer.
+
+## Contributing
+If you would like to extend this plugin you can fork this repo and create a pull request.
+Bugs or feature requests can be reported by creating a new issue.
 
 ## Support
-This code repository is not suitable for support requests. If you have a question or need assistence please access the Support section of the WordPress Plugin directory.
+This code repository is not suitable for support requests. If you have a question or need assistence please access the [Support section](https://wordpress.org/support/plugin/i-dont-like-spam) in the WordPress Plugin directory.
 
 ## Copyright & License
 Code and Documentation &copy; [them.es](https://them.es)
