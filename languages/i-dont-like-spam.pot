@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: I don't like Spam!\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 09:09+0000\n"
+"POT-Creation-Date: 2020-06-02 05:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,47 +15,55 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.3; wp-5.4.2-alpha-47731"
 
-#: i-dont-like-spam.php:47
+#: i-dont-like-spam.php:84
 #, php-format
 msgid ""
-"<strong>I don't like Spam!</strong> is an add-on for contact forms. Please "
-"install and activate the following %s."
+"<strong>I don't like Spam!</strong> is an Anti-Spam add-on for contact forms."
+" One of the following Plugins needs to be installed and activated: %s."
+msgstr ""
+
+#. Name of the plugin
+#: i-dont-like-spam.php:108
+msgid "I don't like Spam!"
+msgstr ""
+
+#: i-dont-like-spam.php:126
+msgid "Error message"
+msgstr ""
+
+#: i-dont-like-spam.php:127
+msgid ""
+"Forms that contain a word from the Comments Blocklist will show this error "
+"message."
+msgstr ""
+
+#: i-dont-like-spam.php:160 i-dont-like-spam.php:191
+#, php-format
+msgid "This %s contains a word that has been blocked."
+msgstr ""
+
+#: i-dont-like-spam.php:160
+msgid "field"
+msgstr ""
+
+#: i-dont-like-spam.php:191
+msgid "form"
 msgstr ""
 
 #. Description of the plugin
 msgid ""
 "Block contact form submissions containing bad words from the WordPress "
-"Comment Blocklist. Compatible with Ninja Forms."
-msgstr ""
-
-#: i-dont-like-spam.php:89
-msgid "Error message"
-msgstr ""
-
-#: i-dont-like-spam.php:90
-msgid ""
-"Form fields that contain a word from the Comments Blocklist will show this "
-"error message."
+"Comment Blocklist. Compatible with Ninja Forms and WPForms."
 msgstr ""
 
 #. URI of the plugin
-#. Author URI of the plugin
-msgid "https://them.es"
-msgstr ""
-
-#. Name of the plugin
-#: i-dont-like-spam.php:71
-msgid "I don't like Spam!"
-msgstr ""
-
-#: i-dont-like-spam.php:47
-msgid "Plugin"
+msgid "https://them.es/plugins/i-dont-like-spam"
 msgstr ""
 
 #. Author of the plugin
 msgid "them.es"
 msgstr ""
 
-#: i-dont-like-spam.php:126
-msgid "This field contains a word that has been blocked."
+#. Author URI of the plugin
+msgid "https://them.es"
 msgstr ""
