@@ -1,21 +1,21 @@
 === I don't like Spam! ===
 Contributors: them.es
 Donate link: https://them.es
-Tags: ninja-forms, wpforms, contact form, anti-spam, blacklist
+Tags: ninja-forms, wpforms, contact form, anti-spam, blocklist
 Requires at least: 4.9
 Tested up to: 5.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
 
-Use the [WordPress Comment Blacklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Currently this plugin is only compatible with selected contact form plugins.
+Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Currently this plugin is only compatible with selected contact form plugins.
 
 = Setup =
 * Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms) or [WPForms](https://wordpress.org/plugins/wpforms-lite).
 * Login to the dashboard and open **Settings > Discussion**.
 * Scroll down to **Comment Blocklist**.
-* Enter some bad words, phrases or weblinks that keep bugging you. **Choose your blacklist words wisely!**
+* Enter some bad words, phrases or weblinks that keep bugging you. **Choose your blocklist wisely!**
 * Contact forms that contain any of these words cannot be submitted anymore and will show an error message.
 * Optional: Modify the error message output in the Theme Customizer.
 
@@ -38,7 +38,7 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 
 1. Upload the Plugin to the `/wp-content/plugins/` directory.
 2. Activate it through the 'Plugins' menu in WordPress.
-3. Add a list of bad words, phrases or weblinks that should prevent form submissions to the [Comment Blacklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist).
+3. Add a list of bad words, phrases or weblinks that should prevent form submissions to the [Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist).
 
 == Upgrade Notice ==
 
@@ -49,6 +49,9 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.1.1 =
+* "Racially neutral" terminology: Rename blacklist to blocklist where possible
 
 = 1.1 =
 * Compatibility with WPForms

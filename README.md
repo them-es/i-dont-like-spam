@@ -1,12 +1,12 @@
 ## I don't like Spam!
 
-**I don't like Spam! by them.es** is a lightweight WordPress Plugin for preventing contact form spam submissions using the [WordPress Comment Blacklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature. Currently this plugin is only compatible with selected contact form plugins.
+**I don't like Spam! by them.es** is a lightweight WordPress Plugin for preventing contact form spam submissions using the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature. Currently this plugin is only compatible with selected contact form plugins.
 
 ## Setup
 * Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms) or [WPForms](https://wordpress.org/plugins/wpforms-lite).
 * Login to the dashboard and open **Settings > Discussion**
 * Scroll down to **Comment Blocklist**
-* Enter all bad words, phrases or weblinks that keep bugging you. **Choose your blacklist words wisely!**
+* Enter all bad words, phrases or weblinks that keep bugging you. **Choose your blocklist wisely!**
 * Contact forms that contain any of these words cannot be submitted anymore and will show an error message.
 * Optional: Modify the error message output in the Theme Customizer.
 

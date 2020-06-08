@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 class I_Dont_Like_Spam {
 
 	/**
-	 * Enter your blacklisted words here: Settings > Discussion > Comment Blocklist
+	 * Enter your blocklist here: Settings > Discussion > Comment Blocklist
 	 *
 	 * https://developer.wordpress.org/reference/functions/wp_blacklist_check
 	 * https://raw.githubusercontent.com/splorp/wordpress-comment-blacklist/master/blacklist.txt
@@ -144,11 +144,11 @@ class I_Dont_Like_Spam {
 
 
 	/**
-	 * Ninja Forms: Server side spam protection using WordPress comment blacklist keys
+	 * Ninja Forms: Server side spam protection using WordPress comment blocklist
 	 *
 	 * https://developer.ninjaforms.com/codex/custom-server-side-validation
 	 *
-	 * Enter your blacklisted words here: Settings > Discussion > Comment Blocklist
+	 * Enter your blocklist here: Settings > Discussion > Comment Blocklist
 	 * https://developer.wordpress.org/reference/functions/wp_blacklist_check
 	 * https://raw.githubusercontent.com/splorp/wordpress-comment-blacklist/master/blacklist.txt
 	 */
@@ -177,7 +177,7 @@ class I_Dont_Like_Spam {
 
 
 	/**
-	 * WPForms: Server side spam protection using WordPress comment blacklist keys
+	 * WPForms: Server side spam protection using WordPress comment blocklist keys
 	 *
 	 * https://wpforms.com/developers/how-to-block-email-addresses-from-your-forms
 	 */
@@ -200,7 +200,7 @@ class I_Dont_Like_Spam {
 				if ( false !== strpos( $field_value, $bad_word ) ) {
 					wpforms()->process->errors[ $form_data['id'] ]['header'] = ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'form', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) );
 
-					return '[Blacklist] ' . $bad_word;
+					return '[Blocklist] ' . $bad_word;
 				}
 			}
 		}
