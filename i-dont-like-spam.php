@@ -3,8 +3,8 @@
  * @wordpress-plugin
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
- * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms and WPForms.
- * Version: 1.1.0
+ * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
+ * Version: 1.2.0
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -60,19 +60,13 @@ class I_Dont_Like_Spam {
 		add_action( 'plugins_loaded', array( $this, 'on_load' ) );
 
 		add_action( 'customize_register', array( $this, 'customizer_settings' ) );
-
-		// Ninja Forms.
-		add_filter( 'ninja_forms_submit_data', array( $this, 'nf_submit_data' ) );
-
-		// WPForms.
-		add_filter( 'wpforms_process_honeypot', array( $this, 'wpf_process_honeypot' ), 10, 4 );
 	}
 
 	/**
 	 * Test compatibility.
 	 */
 	public function pluginmissing_admin_notice() {
-		printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error', sprintf( __( '<strong>I don\'t like Spam!</strong> is an Anti-Spam add-on for contact forms. One of the following Plugins needs to be installed and activated: %s.', 'i-dont-like-spam' ), sprintf( '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%1$s' ) ) . '">%1$s</a>, <a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%2$s' ) ) . '">%2$s</a>', 'Ninja Forms', 'WPForms Lite' ) ) );
+		printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error', sprintf( __( '<strong>I don\'t like Spam!</strong> is an Anti-Spam add-on for contact forms. One of the following Plugins needs to be installed and activated: %s.', 'i-dont-like-spam' ), sprintf( '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%1$s' ) ) . '">%1$s</a>, <a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%2$s' ) ) . '">%2$s</a>', 'Ninja Forms', 'Caldera Forms', 'WPForms Lite' ) ) );
 
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
@@ -80,17 +74,35 @@ class I_Dont_Like_Spam {
 	}
 
 	public function on_load() {
-		if ( ! class_exists( 'Ninja_Forms' ) && ! function_exists( 'wpforms' ) ) {
+		if ( ! class_exists( 'Ninja_Forms' ) && ! class_exists( 'Caldera_Forms' ) && ! function_exists( 'wpforms' ) ) {
 			// Warning: Required plugin is not installed.
 			add_action( 'admin_notices', array( $this, 'pluginmissing_admin_notice' ) );
 
 			return false;
 		}
+
+		// Ninja Forms.
+		if ( class_exists( 'Ninja_Forms' ) ) {
+			add_filter( 'ninja_forms_submit_data', array( $this, 'nf_submit_data' ) );
+		}
+
+		// Caldera Forms.
+		if ( class_exists( 'Caldera_Forms' ) ) {
+			$cf_field_types = array( 'text', 'paragraph', 'email', 'number', 'phone', 'url' ); // Caldera_Forms_Fields::get_all()
+			foreach ( $cf_field_types as $cf_field_type ) {
+				add_filter( 'caldera_forms_validate_field_' . $cf_field_type, array( $this, 'cf_submit_data' ), 25, 3 );
+			}
+		}
+
+		// WPForms.
+		if ( function_exists( 'wpforms' ) ) {
+			add_filter( 'wpforms_process_honeypot', array( $this, 'wpf_process_honeypot' ), 10, 4 );
+		}
 	}
 
 
 	/**
-	 * Flatten an array (e.g. "Name" field in WPForms: )
+	 * Flatten an array (e.g. "Name" field in WPForms)
 	 *
 	 * https://stackoverflow.com/questions/8611313/turning-multidimensional-array-into-one-dimensional-array
 	 */
@@ -173,6 +185,31 @@ class I_Dont_Like_Spam {
 		}
 
 		return $form_data;
+	}
+
+
+	/**
+	 * Caldera Forms: Server side spam protection using WordPress comment blocklist keys
+	 *
+	 * https://calderaforms.com/doc/caldera_forms_validate_field_field_type
+	 */
+	public function cf_submit_data( $value, $field, $form ) {
+		$field_value = wp_strip_all_tags( strtolower( $value ) );
+
+		foreach ( self::$bad_words as $bad_word ) {
+			$bad_word = trim( $bad_word );
+
+			// Skip empty lines.
+			if ( empty( $bad_word ) ) {
+				continue;
+			}
+
+			if ( false !== strpos( $field_value, $bad_word ) ) {
+				return new WP_Error( $field[ 'ID' ], ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'field', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) ) );
+			}
+		}
+
+		return $value;
 	}
 
 
