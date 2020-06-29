@@ -4,7 +4,7 @@ Donate link: https://them.es
 Tags: ninja-forms, caldera-forms, wpforms, contact form, anti-spam, blocklist
 Requires at least: 4.9
 Tested up to: 5.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
@@ -52,6 +52,9 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.2.1 =
+* Improve pluginmissing_admin_notice()
 
 = 1.2 =
 * Compatibility with Caldera Forms

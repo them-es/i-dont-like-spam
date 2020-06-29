@@ -4,7 +4,7 @@
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
  * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -66,7 +66,17 @@ class I_Dont_Like_Spam {
 	 * Test compatibility.
 	 */
 	public function pluginmissing_admin_notice() {
-		printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error', sprintf( __( '<strong>I don\'t like Spam!</strong> is an Anti-Spam add-on for contact forms. One of the following Plugins needs to be installed and activated: %s.', 'i-dont-like-spam' ), sprintf( '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%1$s' ) ) . '">%1$s</a>, <a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=%2$s' ) ) . '">%2$s</a>', 'Ninja Forms', 'Caldera Forms', 'WPForms Lite' ) ) );
+		$plugins = array(
+			'Ninja Forms',
+			'Caldera Forms',
+			'WPForms Lite',
+		);
+		$plugins_missing_links = '';
+		foreach ( $plugins as $plugin ) {
+			$plugins_missing_links .= '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . esc_attr( $plugin ) ) ) . '">' . esc_attr( $plugin ) . '</a>' . ( next( $plugins ) ? ', ' : '' );
+		}
+
+		printf( '<div class="%1$s"><p>%2$s</p></div>', 'notice notice-error', sprintf( __( '<strong>I don\'t like Spam!</strong> is an Anti-Spam add-on for contact forms. One of the following Plugins needs to be installed and activated: %s.', 'i-dont-like-spam' ), $plugins_missing_links ) );
 
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
@@ -159,10 +169,6 @@ class I_Dont_Like_Spam {
 	 * Ninja Forms: Server side spam protection using WordPress comment blocklist
 	 *
 	 * https://developer.ninjaforms.com/codex/custom-server-side-validation
-	 *
-	 * Enter your blocklist here: Settings > Discussion > Comment Blocklist
-	 * https://developer.wordpress.org/reference/functions/wp_blacklist_check
-	 * https://raw.githubusercontent.com/splorp/wordpress-comment-blacklist/master/blacklist.txt
 	 */
 	public function nf_submit_data( $form_data ) {
 		foreach ( $form_data['fields'] as $field ) {
