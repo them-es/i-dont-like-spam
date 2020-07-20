@@ -3,16 +3,15 @@ Contributors: them.es
 Donate link: https://them.es
 Tags: ninja-forms, caldera-forms, wpforms, contact form, anti-spam, blocklist
 Requires at least: 4.9
-Tested up to: 5.4
-Stable tag: 1.2.1
+Tested up to: 5.5
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
 
-Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Currently this plugin is only compatible with selected contact form plugins.
+Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [Caldera Forms](https://wordpress.org/plugins/caldera-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
 
 = Setup =
-* Anti-Spam add-on for [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [Caldera Forms](https://wordpress.org/plugins/caldera-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
 * Login to the dashboard and open **Settings > Discussion**.
 * Scroll down to **Comment Blocklist**.
 * Enter some bad words, phrases or weblinks that keep bugging you. **Choose your blocklist wisely!**
@@ -42,6 +41,9 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 
 == Upgrade Notice ==
 
+= 1.2.2 =
+* Compatibility with WordPress 5.5
+
 = 1.2 =
 * Compatibility with Caldera Forms
 
@@ -52,6 +54,9 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 * Initial public release in the WordPress Plugin directory
 
 == Changelog ==
+
+= 1.2.2 =
+* Use option 'blocklist_keys' if WordPress version >=5.5
 
 = 1.2.1 =
 * Improve pluginmissing_admin_notice()

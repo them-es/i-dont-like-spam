@@ -4,7 +4,7 @@
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
  * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -54,7 +54,10 @@ class I_Dont_Like_Spam {
 	 * A helper function to initiate actions, hooks and other features needed.
 	 */
 	public function init() {
-		self::$bad_words     = explode( "\n", strtolower( trim( get_option( 'blacklist_keys' ) ) ) );
+		// [WP 5.5+] https://core.trac.wordpress.org/ticket/50413
+		$blocklist_keys      = ( function_exists( 'wp_blocklist_check' ) ? get_option( 'blocklist_keys' ) : get_option( 'blacklist_keys' ) );
+
+		self::$bad_words     = explode( "\n", strtolower( esc_textarea( $blocklist_keys ) ) );
 		self::$error_message = get_theme_mod( 'i_dont_like_spam_errormessage' );
 
 		add_action( 'plugins_loaded', array( $this, 'on_load' ) );
