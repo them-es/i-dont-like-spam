@@ -4,7 +4,7 @@ Donate link: https://them.es
 Tags: ninja-forms, caldera-forms, wpforms, contact form, anti-spam, blocklist
 Requires at least: 4.9
 Tested up to: 5.6
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0

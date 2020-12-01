@@ -4,7 +4,7 @@
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
  * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
- * Version: 1.2.3
+ * Version: 1.2.4
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -26,7 +26,7 @@ class I_Dont_Like_Spam {
 	 * https://raw.githubusercontent.com/splorp/wordpress-comment-blacklist/master/blacklist.txt
 	 *
 	 * @access public
-	 * @var string
+	 * @var array
 	 */
 	public static $bad_words;
 
@@ -115,10 +115,12 @@ class I_Dont_Like_Spam {
 
 	/**
 	 * Flatten an array (e.g. "Name" field in WPForms)
-	 *
 	 * https://stackoverflow.com/questions/8611313/turning-multidimensional-array-into-one-dimensional-array
+	 *
+	 * @param array $arr.
+	 * @return array The new flattened fields array.
 	 */
-	public function flatten_fields_array( array $arr ) {
+	public function flatten_fields_array( $arr ) {
 		$arr_new = array();
 		array_walk_recursive(
 			$arr,
@@ -133,6 +135,8 @@ class I_Dont_Like_Spam {
 
 	/**
 	 * Theme Customizer additions and adjustments.
+	 *
+	 * @param object $wp_customize.
 	 */
 	public function customizer_settings( $wp_customize ) {
 		// Section.
@@ -169,8 +173,11 @@ class I_Dont_Like_Spam {
 
 	/**
 	 * Ninja Forms: Server side spam protection using WordPress comment blocklist
-	 *
 	 * https://developer.ninjaforms.com/codex/custom-server-side-validation
+	 *
+	 * @param array $form_data Form data array.
+	 *
+	 * @return array $form_data Spam checked form data array.
 	 */
 	public function nf_submit_data( $form_data ) {
 		foreach ( $form_data['fields'] as $field ) {
@@ -198,8 +205,13 @@ class I_Dont_Like_Spam {
 
 	/**
 	 * Caldera Forms: Server side spam protection using WordPress comment blocklist keys
-	 *
 	 * https://calderaforms.com/doc/caldera_forms_validate_field_field_type
+	 *
+	 * @param string $value The form field value.
+	 * @param array  $field The form field array.
+	 * @param array  $form The form array.
+	 *
+	 * @return string|WP_Error $value Spam checked form field value.
 	 */
 	public function cf_submit_data( $value, $field, $form ) {
 		$field_value = wp_strip_all_tags( strtolower( $value ) );
@@ -223,8 +235,14 @@ class I_Dont_Like_Spam {
 
 	/**
 	 * WPForms: Server side spam protection using WordPress comment blocklist keys
-	 *
 	 * https://wpforms.com/developers/how-to-block-email-addresses-from-your-forms
+	 *
+	 * @param string $honeypot Honeypot field.
+	 * @param array  $fields Form fields.
+	 * @param array  $entry Entry data.
+	 * @param string $form_data Form data.
+	 *
+	 * @return string $honeypot Spam checked honeypot field.
 	 */
 	public function wpf_process_honeypot( $honeypot, $fields, $entry, $form_data ) {
 		// Flatten fields array (e.g. "Name" field).
@@ -245,7 +263,7 @@ class I_Dont_Like_Spam {
 				if ( false !== strpos( $field_value, $bad_word ) ) {
 					wpforms()->process->errors[ $form_data['id'] ]['header'] = ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'form', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) );
 
-					return '[Blocklist] ' . $bad_word;
+					$honeypot = '[Blocklist] ' . $bad_word;
 				}
 			}
 		}
