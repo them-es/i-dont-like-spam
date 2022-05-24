@@ -3,13 +3,16 @@ Contributors: them.es
 Donate link: https://them.es
 Tags: ninja-forms, caldera-forms, wpforms, contact form, anti-spam, blocklist
 Requires at least: 4.9
-Tested up to: 5.9
+Tested up to: 6.0
 Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
 
-Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions. Compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [Caldera Forms](https://wordpress.org/plugins/caldera-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
+Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions.
+
+= Compatibility =
+This plugin is compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [Caldera Forms](https://wordpress.org/plugins/caldera-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
 
 = Setup =
 * Login to the dashboard and open **Settings > Discussion**.
