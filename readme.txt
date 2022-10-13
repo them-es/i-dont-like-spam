@@ -14,9 +14,14 @@ Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comm
 = Compatibility =
 This plugin is compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [Caldera Forms](https://wordpress.org/plugins/caldera-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
 
+= Features =
+* Not reinventing the wheel since WordPress already has a Comment Blocklist feature.
+* Privacy by Design by using a local blocklist.
+* No external API.
+
 = Setup =
 * Login to the dashboard and open **Settings > Discussion**.
-* Scroll down to **Comment Blocklist**.
+* Scroll down to **Disallowed Comment Keys**.
 * Enter some bad words, phrases or weblinks that keep bugging you. **Choose your blocklist wisely!**
 * Contact forms that contain any of these words cannot be submitted anymore and will show an error message.
 * Optional: Modify the error message output in the Theme Customizer.
