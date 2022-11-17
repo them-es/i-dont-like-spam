@@ -4,7 +4,7 @@
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
  * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
- * Version: 1.2.4
+ * Version: 1.2.5
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -100,7 +100,7 @@ class I_Dont_Like_Spam {
 
 		// Caldera Forms.
 		if ( class_exists( 'Caldera_Forms' ) ) {
-			$cf_field_types = array( 'text', 'paragraph', 'email', 'number', 'phone', 'url' ); // Caldera_Forms_Fields::get_all()
+			$cf_field_types = array( 'text', 'paragraph', 'email', 'number', 'phone', 'url' ); // Caldera_Forms_Fields::get_all().
 			foreach ( $cf_field_types as $cf_field_type ) {
 				add_filter( 'caldera_forms_validate_field_' . $cf_field_type, array( $this, 'cf_submit_data' ), 25, 3 );
 			}
@@ -181,8 +181,13 @@ class I_Dont_Like_Spam {
 	 */
 	public function nf_submit_data( $form_data ) {
 		foreach ( $form_data['fields'] as $field ) {
+			// Skip array values.
+			if ( is_array( $field['value'] ) ) {
+				continue;
+			}
+
 			// Field settings, including the field key and value.
-			$field_value = wp_strip_all_tags( strtolower( $field['value'] ) );
+			$field_value = wp_strip_all_tags( strtolower( (string) $field['value'] ) );
 			$field_id    = esc_attr( $field['id'] );
 
 			foreach ( self::$bad_words as $bad_word ) {
@@ -214,7 +219,7 @@ class I_Dont_Like_Spam {
 	 * @return string|WP_Error $value Spam checked form field value.
 	 */
 	public function cf_submit_data( $value, $field, $form ) {
-		$field_value = wp_strip_all_tags( strtolower( $value ) );
+		$field_value = wp_strip_all_tags( strtolower( (string) $value ) );
 
 		foreach ( self::$bad_words as $bad_word ) {
 			$bad_word = trim( $bad_word );
@@ -225,7 +230,7 @@ class I_Dont_Like_Spam {
 			}
 
 			if ( false !== strpos( $field_value, $bad_word ) ) {
-				return new WP_Error( $field[ 'ID' ], ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'field', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) ) );
+				return new WP_Error( $field['ID'], ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'field', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) ) );
 			}
 		}
 
@@ -250,7 +255,7 @@ class I_Dont_Like_Spam {
 
 		foreach ( $entry_fields as $field ) {
 			// Field value.
-			$field_value = wp_strip_all_tags( strtolower( $field ) );
+			$field_value = wp_strip_all_tags( strtolower( (string) $field ) );
 
 			foreach ( self::$bad_words as $bad_word ) {
 				$bad_word = trim( $bad_word );
