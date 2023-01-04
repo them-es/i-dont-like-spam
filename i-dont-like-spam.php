@@ -1,10 +1,9 @@
 <?php
 /**
- * @wordpress-plugin
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
  * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
- * Version: 1.2.5
+ * Version: 1.2.6
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -15,7 +14,6 @@
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
 
 class I_Dont_Like_Spam {
 
@@ -30,7 +28,6 @@ class I_Dont_Like_Spam {
 	 */
 	public static $bad_words;
 
-
 	/**
 	 * Error message.
 	 *
@@ -39,14 +36,12 @@ class I_Dont_Like_Spam {
 	 */
 	public static $error_message;
 
-
 	/**
 	 * On load.
 	 */
 	public function __construct() {
 		$this->init();
 	}
-
 
 	/**
 	 * Plugin initiation.
@@ -66,6 +61,8 @@ class I_Dont_Like_Spam {
 
 	/**
 	 * Test compatibility.
+	 *
+	 * @return void
 	 */
 	public function pluginmissing_admin_notice() {
 		$plugins = array(
@@ -73,6 +70,7 @@ class I_Dont_Like_Spam {
 			'Caldera Forms',
 			'WPForms Lite',
 		);
+
 		$plugins_missing_links = '';
 		foreach ( $plugins as $plugin ) {
 			$plugins_missing_links .= '<a href="' . esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . esc_attr( $plugin ) ) ) . '">' . esc_attr( $plugin ) . '</a>' . ( next( $plugins ) ? ', ' : '' );
@@ -85,6 +83,11 @@ class I_Dont_Like_Spam {
 		}
 	}
 
+	/**
+	 * On load.
+	 *
+	 * @return false|void
+	 */
 	public function on_load() {
 		if ( ! class_exists( 'Ninja_Forms' ) && ! class_exists( 'Caldera_Forms' ) && ! function_exists( 'wpforms' ) ) {
 			// Warning: Required plugin is not installed.
@@ -112,13 +115,13 @@ class I_Dont_Like_Spam {
 		}
 	}
 
-
 	/**
-	 * Flatten an array (e.g. "Name" field in WPForms)
+	 * Flatten an array (e.g. "Name" field in WPForms).
 	 * https://stackoverflow.com/questions/8611313/turning-multidimensional-array-into-one-dimensional-array
 	 *
-	 * @param array $arr.
-	 * @return array The new flattened fields array.
+	 * @param array $arr Make a multidimensional array an one-dimensional array.
+	 *
+	 * @return array New flattened fields array.
 	 */
 	public function flatten_fields_array( $arr ) {
 		$arr_new = array();
@@ -132,11 +135,12 @@ class I_Dont_Like_Spam {
 		return $arr_new;
 	}
 
-
 	/**
 	 * Theme Customizer additions and adjustments.
 	 *
-	 * @param object $wp_customize.
+	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+	 *
+	 * @return void
 	 */
 	public function customizer_settings( $wp_customize ) {
 		// Section.
@@ -169,7 +173,6 @@ class I_Dont_Like_Spam {
 			)
 		);
 	}
-
 
 	/**
 	 * Ninja Forms: Server side spam protection using WordPress comment blocklist
@@ -207,14 +210,13 @@ class I_Dont_Like_Spam {
 		return $form_data;
 	}
 
-
 	/**
 	 * Caldera Forms: Server side spam protection using WordPress comment blocklist keys
 	 * https://calderaforms.com/doc/caldera_forms_validate_field_field_type
 	 *
-	 * @param string $value The form field value.
-	 * @param array  $field The form field array.
-	 * @param array  $form The form array.
+	 * @param string $value Form field value.
+	 * @param array  $field Form field array.
+	 * @param array  $form  Form array.
 	 *
 	 * @return string|WP_Error $value Spam checked form field value.
 	 */
@@ -237,14 +239,13 @@ class I_Dont_Like_Spam {
 		return $value;
 	}
 
-
 	/**
 	 * WPForms: Server side spam protection using WordPress comment blocklist keys
 	 * https://wpforms.com/developers/how-to-block-email-addresses-from-your-forms
 	 *
-	 * @param string $honeypot Honeypot field.
-	 * @param array  $fields Form fields.
-	 * @param array  $entry Entry data.
+	 * @param string $honeypot  Honeypot field.
+	 * @param array  $fields    Form fields.
+	 * @param array  $entry     Entry data.
 	 * @param string $form_data Form data.
 	 *
 	 * @return string $honeypot Spam checked honeypot field.
