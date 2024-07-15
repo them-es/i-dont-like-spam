@@ -1,18 +1,18 @@
 === I don't like Spam! ===
 Contributors: them.es
 Donate link: https://them.es
-Tags: ninja-forms, caldera-forms, wpforms, contact form, anti-spam, blocklist
+Tags: ninja-forms, wpforms, contact form, anti-spam, blocklist
 Requires at least: 4.9
-Tested up to: 6.1
-Stable tag: 1.2.6
+Tested up to: 6.6
+Stable tag: 1.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
 
-Use the [WordPress Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect you from contact form spam submissions.
+Use the [Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect your contact form.
 
 = Compatibility =
-This plugin is compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [Caldera Forms](https://wordpress.org/plugins/caldera-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
+This plugin is compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
 
 = Features =
 * Not reinventing the wheel since WordPress already has a Comment Blocklist feature.
@@ -48,6 +48,10 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 3. Add a list of bad words, phrases or weblinks that should prevent form submissions to the [Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist).
 
 == Changelog ==
+
+= 1.2.7 =
+* Tested up to WordPress 6.6
+* The Caldera Forms plugin has been closed by the developers - add a deprecated notice to the code
 
 = 1.2.6 =
 * Code quality

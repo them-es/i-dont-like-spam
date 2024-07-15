@@ -2,8 +2,8 @@
 /**
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
- * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms, Caldera Forms and WPForms.
- * Version: 1.2.6
+ * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms and WPForms.
+ * Version: 1.2.7
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -101,17 +101,17 @@ class I_Dont_Like_Spam {
 			add_filter( 'ninja_forms_submit_data', array( $this, 'nf_submit_data' ) );
 		}
 
-		// Caldera Forms.
+		// WPForms.
+		if ( function_exists( 'wpforms' ) ) {
+			add_filter( 'wpforms_process_honeypot', array( $this, 'wpf_process_honeypot' ), 10, 4 );
+		}
+
+		// [Deprecated since v1.2.7 - the code will be removed in an upcoming release] Caldera Forms.
 		if ( class_exists( 'Caldera_Forms' ) ) {
 			$cf_field_types = array( 'text', 'paragraph', 'email', 'number', 'phone', 'url' ); // Caldera_Forms_Fields::get_all().
 			foreach ( $cf_field_types as $cf_field_type ) {
 				add_filter( 'caldera_forms_validate_field_' . $cf_field_type, array( $this, 'cf_submit_data' ), 25, 3 );
 			}
-		}
-
-		// WPForms.
-		if ( function_exists( 'wpforms' ) ) {
-			add_filter( 'wpforms_process_honeypot', array( $this, 'wpf_process_honeypot' ), 10, 4 );
 		}
 	}
 
@@ -127,7 +127,7 @@ class I_Dont_Like_Spam {
 		$arr_new = array();
 		array_walk_recursive(
 			$arr,
-			function( $a ) use ( &$arr_new ) {
+			function ( $a ) use ( &$arr_new ) {
 				$arr_new[] = $a;
 			}
 		);
@@ -276,7 +276,6 @@ class I_Dont_Like_Spam {
 
 		return $honeypot;
 	}
-
 }
 
 $i_dont_like_spam = new I_Dont_Like_Spam();
