@@ -4,7 +4,7 @@
 
 ## Compatibility
 
-This plugin is compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
+This plugin is compatible with [Gutenberg Form block (experimental!)](https://wordpress.org/plugins/gutenberg), [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [WPForms](https://wordpress.org/plugins/wpforms-lite) and [Contact Form Block](https://wordpress.org/plugins/contact-form-block).
 
 ## Setup
 

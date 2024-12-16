@@ -2,8 +2,8 @@
 /**
  * Plugin Name: I don't like Spam!
  * Plugin URI: https://them.es/plugins/i-dont-like-spam
- * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with Ninja Forms and WPForms.
- * Version: 1.2.8
+ * Description: Block contact form submissions containing bad words from the WordPress Comment Blocklist. Compatible with the Gutenberg form block (experimental), Ninja Forms, WPForms and Meow Contact Form Block.
+ * Version: 1.3.0
  * Author: them.es
  * Author URI: https://them.es
  * License: GPL-2.0+
@@ -66,8 +66,10 @@ class I_Dont_Like_Spam {
 	 */
 	public function pluginmissing_admin_notice() {
 		$plugins = array(
+			'Gutenberg',
 			'Ninja Forms',
 			'WPForms Lite',
+			'Contact Form Block',
 		);
 
 		$plugins_missing_links = '';
@@ -88,19 +90,37 @@ class I_Dont_Like_Spam {
 	 * @return false|void
 	 */
 	public function on_load() {
-		if ( ! class_exists( 'Ninja_Forms' ) && ! function_exists( 'wpforms' ) ) {
-			// Warning: Required plugin is not installed.
-			add_action( 'admin_notices', array( $this, 'pluginmissing_admin_notice' ) );
+		// [Experimental] Gutenberg Form Block.
+		if ( function_exists( 'gutenberg_is_experiment_enabled' ) && gutenberg_is_experiment_enabled( 'gutenberg-form-blocks' ) ) {
+			$required_plugin_installed = true;
+
+			add_filter( 'render_block_core_form_email_content', array( $this, 'core_form_data' ), 10, 2 );
 		}
 
 		// Ninja Forms.
 		if ( class_exists( 'Ninja_Forms' ) ) {
+			$required_plugin_installed = true;
+
 			add_filter( 'ninja_forms_submit_data', array( $this, 'nf_submit_data' ) );
 		}
 
 		// WPForms.
 		if ( function_exists( 'wpforms' ) ) {
+			$required_plugin_installed = true;
+
 			add_filter( 'wpforms_process_honeypot', array( $this, 'wpf_process_honeypot' ), 10, 4 );
+		}
+
+		// Meow Contact Form Block.
+		if ( class_exists( 'Meow_Contact_Form_Core' ) ) {
+			$required_plugin_installed = true;
+
+			add_filter( 'mcfb_validate', array( $this, 'mcfb_validate' ), 10, 2 );
+		}
+
+		// Warning: Required plugin is not installed.
+		if ( ! isset( $required_plugin_installed ) ) {
+			add_action( 'admin_notices', array( $this, 'pluginmissing_admin_notice' ) );
 		}
 	}
 
@@ -164,6 +184,44 @@ class I_Dont_Like_Spam {
 	}
 
 	/**
+	 * Gutenberg Forms (experimental!)
+	 * https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/form/index.php
+	 * https://github.com/WordPress/gutenberg/pull/44214
+	 * https://gist.github.com/aristath/7f5ed7185a35e58c8ea65d1154b3d86d
+	 *
+	 * @param array $content Content.
+	 * @param array $params  Form data array.
+	 *
+	 * @return string
+	 */
+	public function core_form_data( $content, $params ) {
+		foreach ( $params as $row => $field ) {
+			// Skip referer row.
+			if ( '_wp_http_referer' === $row ) {
+				continue;
+			}
+
+			foreach ( self::$bad_words as $bad_word ) {
+				$bad_word = trim( $bad_word );
+
+				// Skip empty lines.
+				if ( empty( $bad_word ) ) {
+					continue;
+				}
+
+				if ( str_contains( $field, $bad_word ) ) {
+					error_log( ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'form', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) ) );
+
+					wp_safe_redirect( get_site_url( null, $params['_wp_http_referer'] ) );
+					exit();
+				}
+			}
+		}
+
+		return $content;
+	}
+
+	/**
 	 * Ninja Forms: Server side spam protection using WordPress comment blocklist
 	 * https://developer.ninjaforms.com/codex/custom-server-side-validation
 	 *
@@ -190,7 +248,7 @@ class I_Dont_Like_Spam {
 					continue;
 				}
 
-				if ( false !== strpos( $field_value, $bad_word ) ) {
+				if ( str_contains( $field_value, $bad_word ) ) {
 					$form_data['errors']['fields'][ $field_id ] = ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'field', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) );
 				}
 			}
@@ -226,7 +284,7 @@ class I_Dont_Like_Spam {
 					continue;
 				}
 
-				if ( false !== strpos( $field_value, $bad_word ) ) {
+				if ( str_contains( $field_value, $bad_word ) ) {
 					wpforms()->process->errors[ $form_data['id'] ]['header'] = ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'form', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) );
 
 					$honeypot = '[Blocklist] ' . $bad_word;
@@ -235,6 +293,34 @@ class I_Dont_Like_Spam {
 		}
 
 		return $honeypot;
+	}
+
+	/**
+	 * Contact Form Block
+	 * https://wordpress.org/plugins/contact-form-block
+	 *
+	 * @param string $error Error message.
+	 * @param array  $form  Form fields.
+	 *
+	 * @return string|null
+	 */
+	public function mcfb_validate( $error, $form ) {
+		foreach ( $form as $field ) {
+			foreach ( self::$bad_words as $bad_word ) {
+				$bad_word = trim( $bad_word );
+
+				// Skip empty lines.
+				if ( empty( $bad_word ) ) {
+					continue;
+				}
+
+				if ( str_contains( $field, $bad_word ) ) {
+					return ( empty( self::$error_message ) ? sprintf( __( 'This %s contains a word that has been blocked.', 'i-dont-like-spam' ), __( 'form', 'i-dont-like-spam' ) ) : esc_attr( self::$error_message ) );
+				}
+			}
+		}
+
+		return null;
 	}
 }
 

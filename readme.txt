@@ -2,17 +2,17 @@
 Contributors: them.es
 Donate link: https://them.es
 Tags: ninja-forms, wpforms, antispam, anti-spam, blocklist
-Requires at least: 4.9
+Requires at least: 5.9
 Tested up to: 6.7
-Stable tag: 1.2.8
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires PHP: 7.0
+Requires PHP: 7.2
 
 Use the [Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist) feature to protect your contact form.
 
 == Compatibility ==
-This plugin is compatible with [Ninja Forms](https://wordpress.org/plugins/ninja-forms) and [WPForms](https://wordpress.org/plugins/wpforms-lite).
+This plugin is compatible with [Gutenberg Form block (experimental!)](https://wordpress.org/plugins/gutenberg), [Ninja Forms](https://wordpress.org/plugins/ninja-forms), [WPForms](https://wordpress.org/plugins/wpforms-lite) and [Contact Form Block](https://wordpress.org/plugins/contact-form-block).
 
 == Features ==
 * Not reinventing the wheel since WordPress already has a Comment Blocklist feature.
@@ -48,6 +48,10 @@ Spam emails are usually very annoying and affect work - and there is nothing fun
 3. Add a list of bad words, phrases or weblinks that should prevent form submissions to the [Comment Blocklist](https://codex.wordpress.org/Combating_Comment_Spam#Comment_Blacklist).
 
 == Changelog ==
+
+= 1.3.0 =
+* Compatibility with the Gutenberg form block (experimental) and the Meow Contact Form Block plugin
+* Minor refactoring - bump minimum supported WordPress and PHP versions
 
 = 1.2.8 =
 * Tested up to WordPress 6.7
